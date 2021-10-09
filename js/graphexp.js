@@ -22,6 +22,8 @@ const colors = [
 var rot = 0;
 var neg = 1;
 var swop = false;
+var defaultMax = 6;
+var max = 6;
 
 var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -40,8 +42,7 @@ showRe();
 
 function createLines() {
     let i = 0;
-    let max = 6;
-    if (swop) max = 3;
+    if (max != 0.1) max = defaultMax;
     for (let b = 0; b <= max; b += 0.25) {
         var line = new THREE.Geometry();
         var line = new Float32Array(600);
@@ -299,6 +300,14 @@ function swap() {
         if (swop) lined_var[i].innerHTML = '';
         else lined_var[i].innerText = 'i';
     }
+    if (swop) defaultMax = 3;
+    else defaultMax = 6;
+    init();
+}
+function only() {
+    if (max == 0.1) max = defaultMax;
+    else max = 0.1;
+    clear();
     init();
 }
 function clear() {

@@ -172,7 +172,7 @@ function createText() {
         ];
         let xMesh = new THREE.Mesh(xlabel, materials);
         xMesh.position.x = 30;
-        xMesh.rotation.x = 3.14159 / 10;
+        xMesh.rotation.x = 3.14159 / 2;
 
         graph.add(xMesh);
 
@@ -193,7 +193,7 @@ function createText() {
         ];
         let ReMesh = new THREE.Mesh(Relabel, materials);
         ReMesh.position.z = 30;
-        ReMesh.rotation.x = 3.14159 / 10;
+        ReMesh.rotation.x = 3.14159 / 2;
         ReMesh.rotation.y = 3.14159;
 
         graph.add(ReMesh);
