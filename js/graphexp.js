@@ -17,6 +17,10 @@ const colors = [
     0x72d7f7, 0x72c0f7, 0x71a9f7, 0x7293f7, 0x727cf7, 0x7f72f7, 0x9672f7,
     0xad72f7, 0xc472f7, 0xda72f7, 0xf172f7, 0xf772e6, 0xf772d0,
 ];
+const colors2 = [
+    0x72f777, 0x72f78e, 0x72f7a5, 0x72f7bc, 0x72f7d3, 0x72f7ea, 0x72eef7,
+    0x72d7f7, 0x72c0f7, 0x71a9f7,
+];
 
 var rot = 0;
 var neg = 1;
@@ -39,18 +43,21 @@ showRe();
 
 function createLines() {
     let i = 0;
-    for (let b = 0; b <= 2; b += 0.25) {
+    for (let b = 0; b <= 6; b += 1 / 3) {
         var line = new THREE.Geometry();
         var line = new Float32Array(600);
         for (var j = 0; j < 200 * 3; j += 3) {
             a = j / 50 - 6;
             line[j] = a;
             if (swop) {
-                line[j + 1] = Im(b * neg, a) / 10;
-                line[j + 2] = Re(b * neg, a) / 10;
+                line[j + 1] = Math.log(Im(b * neg, a));
+                line[j + 2] = Math.log(Re(b * neg, a));
             } else {
-                line[j + 1] = Im(a, b * neg) / 10;
-                line[j + 2] = Re(a, b * neg) / 10;
+                let im = Im(a, b * neg);
+                let re = Re(a, b * neg);
+
+                line[j + 1] = im / 25;
+                line[j + 2] = re / 25;
             }
         }
         i++;
@@ -172,7 +179,7 @@ function createText() {
         ];
         let xMesh = new THREE.Mesh(xlabel, materials);
         xMesh.position.x = 30;
-        xMesh.rotation.x = 3.14159 / 10;
+        xMesh.rotation.x = 3.14159 / 2;
 
         graph.add(xMesh);
 
@@ -193,7 +200,7 @@ function createText() {
         ];
         let ReMesh = new THREE.Mesh(Relabel, materials);
         ReMesh.position.z = 30;
-        ReMesh.rotation.x = 3.14159 / 10;
+        ReMesh.rotation.x = 3.14159 / 2;
         ReMesh.rotation.y = 3.14159;
 
         graph.add(ReMesh);
@@ -213,10 +220,10 @@ function onWindowResize() {
 
     var aspect = w / h;
 
-    camera.left = (-frustumSize * aspect) / 10;
-    camera.right = (frustumSize * aspect) / 10;
-    camera.top = frustumSize / 10;
-    camera.bottom = -frustumSize / 10;
+    camera.left = (-frustumSize * aspect) / 2;
+    camera.right = (frustumSize * aspect) / 2;
+    camera.top = frustumSize / 2;
+    camera.bottom = -frustumSize / 2;
 
     camera.updateProjectionMatrix();
 
@@ -233,10 +240,10 @@ function render() {
     renderer.render(scene, camera);
 }
 function Re(x, y) {
-    return x * x * x - 3 * x * y * y;
+    return Math.pow(Math.E, x) * Math.cos(y);
 }
 function Im(x, y) {
-    return 3 * x * x * y - y * y * y;
+    return Math.pow(Math.E, x) * Math.sin(y);
 }
 function hina() {
     if (rot == 0.25) {

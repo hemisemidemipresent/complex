@@ -10,7 +10,7 @@ body {
 	width: 100%;
 	height: 100%;
 	background-color: #dedede;
-	color: #202020;
+	color: #ffffff;
 	padding: 20px;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
@@ -31,11 +31,16 @@ h1 {
 	font-size: 24px;
 	margin-bottom: .5em;
 }
-
+a {
+	color:#71a9f7;
+	text-decoration: none;
+}
 #title {
 	position: absolute;
 	left: 20px;
 	top: 20px;
+	background: rgba(36,36,36,0.69);
+	padding: 1em;
 }
 
 #directions {
@@ -52,31 +57,31 @@ h1 {
 }
 
 .b1 {
-	color: #71a9f7
+	color: #72f777
 }
 
 .b2 {
-	color: #7096e3
+	color: #72f78e
 }
 
 .b3 {
-	color: #6e83ce
+	color: #72f7a5
 }
 
 .b4 {
-	color: #6d70ba
+	color: #72f7bc
 }
 
 .b5 {
-	color: #6b5ca5
+	color: #72f7d3
 }
 
 .b6 {
-	color: #6f3b80
+	color: #72f7ea
 }
 
 .b7 {
-	color: #712a6d
+	color: #72eef7
 }
 
 @font-face {
