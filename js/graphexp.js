@@ -17,6 +17,7 @@ const colors = [
     0x72d7f7, 0x72c0f7, 0x71a9f7, 0x7293f7, 0x727cf7, 0x7f72f7, 0x9672f7,
     0xad72f7, 0xc472f7, 0xda72f7, 0xf172f7, 0xf772e6, 0xf772d0, 0xf772b9,
     0xf772a2, 0xf7728b, 0xf77274, 0xf78672, 0xf79d72, 0xf7b472, 0xf7cb72,
+    0xf7e272, 0xf6f772, 0xdff772, 0xc8f772, 0xb1f772, 0x9af772, 0x83f772,
 ];
 
 var rot = 0;
@@ -50,14 +51,11 @@ function createLines() {
             a = j / 50 - 6;
             line[j] = a;
             if (swop) {
-                line[j + 1] = Im(b * neg, a);
-                line[j + 2] = Re(b * neg, a);
+                line[j + 1] = Im(b, a * neg);
+                line[j + 2] = Re(b, a * neg);
             } else {
-                let im = Im(a, b * neg);
-                let re = Re(a, b * neg);
-
-                line[j + 1] = im / 25;
-                line[j + 2] = re / 25;
+                line[j + 1] = Im(a * neg, b) / 25;
+                line[j + 2] = Re(a * neg, b) / 25;
             }
         }
         i++;
@@ -270,6 +268,15 @@ function showRe() {
 function showIm() {
     rot = 0;
     camera.position.set(0, 0, 30);
+    graph.rotation.x = 0;
+    graph.rotation.y = 0;
+    graph.rotation.z = 0;
+
+    camera.rotation.z = 180;
+}
+function ReIm() {
+    rot = 0;
+    camera.position.set(30, 0, 0);
     graph.rotation.x = 0;
     graph.rotation.y = 0;
     graph.rotation.z = 0;

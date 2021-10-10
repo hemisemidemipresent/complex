@@ -46,11 +46,11 @@ function createLines() {
             a = j / 50 - 6;
             line[j] = a;
             if (swop) {
-                line[j + 1] = Im(b * neg, a) / 2;
-                line[j + 2] = Re(b * neg, a) / 2;
+                line[j + 1] = Im(b, a * neg) / 2;
+                line[j + 2] = Re(b, a * neg) / 2;
             } else {
-                line[j + 1] = Im(a, b * neg) / 2;
-                line[j + 2] = Re(a, b * neg) / 2;
+                line[j + 1] = Im(a * neg, b) / 2;
+                line[j + 2] = Re(a * neg, b) / 2;
             }
         }
         i++;
@@ -263,6 +263,15 @@ function showRe() {
 function showIm() {
     rot = 0;
     camera.position.set(0, 0, 30);
+    graph.rotation.x = 0;
+    graph.rotation.y = 0;
+    graph.rotation.z = 0;
+
+    camera.rotation.z = 180;
+}
+function ReIm() {
+    rot = 0;
+    camera.position.set(30, 0, 0);
     graph.rotation.x = 0;
     graph.rotation.y = 0;
     graph.rotation.z = 0;

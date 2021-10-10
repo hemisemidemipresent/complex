@@ -41,16 +41,16 @@ function createLines() {
     let i = 0;
     for (let b = 0; b <= 2; b += 0.25) {
         var line = new THREE.Geometry();
-        var line = new Float32Array(600);
-        for (var j = 0; j < 200 * 3; j += 3) {
-            a = j / 50 - 6;
+        var line = new Float32Array(1200);
+        for (var j = 0; j < 400 * 3; j += 3) {
+            a = j / 100 - 6;
             line[j] = a;
             if (swop) {
-                line[j + 1] = Im(b, a * neg) / 10;
-                line[j + 2] = Re(b, a * neg) / 10;
+                line[j + 1] = Im(b, a * neg);
+                line[j + 2] = Re(b, a * neg);
             } else {
-                line[j + 1] = Im(a * neg, b) / 10;
-                line[j + 2] = Re(a * neg, b) / 10;
+                line[j + 1] = Im(a * neg, b);
+                line[j + 2] = Re(a * neg, b);
             }
         }
         i++;
@@ -213,10 +213,10 @@ function onWindowResize() {
 
     var aspect = w / h;
 
-    camera.left = (-frustumSize * aspect) / 10;
-    camera.right = (frustumSize * aspect) / 10;
-    camera.top = frustumSize / 10;
-    camera.bottom = -frustumSize / 10;
+    camera.left = (-frustumSize * aspect) / 2;
+    camera.right = (frustumSize * aspect) / 2;
+    camera.top = frustumSize / 2;
+    camera.bottom = -frustumSize / 2;
 
     camera.updateProjectionMatrix();
 
@@ -233,10 +233,14 @@ function render() {
     renderer.render(scene, camera);
 }
 function Re(x, y) {
-    return x * x * x - 3 * x * y * y;
+    let z = Math.sqrt(x * x + y * y);
+    let theta = Math.atan(y / x);
+    return Math.sqrt(z) * Math.cos(theta / 2);
 }
 function Im(x, y) {
-    return 3 * x * x * y - y * y * y;
+    let z = Math.sqrt(x * x + y * y);
+    let theta = Math.atan(y / x);
+    return Math.sqrt(z) * Math.sin(theta / 2);
 }
 function hina() {
     if (rot == 0.25) {
