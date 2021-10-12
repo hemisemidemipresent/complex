@@ -15,12 +15,16 @@ const axes = [0x50514f, 0x70c1b3, 0xed6a5a];
 const colors = [
     0x72f777, 0x72f78e, 0x72f7a5, 0x72f7bc, 0x72f7d3, 0x72f7ea, 0x72eef7,
     0x72d7f7, 0x72c0f7, 0x71a9f7, 0x7293f7, 0x727cf7, 0x7f72f7, 0x9672f7,
-    0xad72f7, 0xc472f7, 0xda72f7, 0xf172f7, 0xf772e6, 0xf772d0,
+    0xad72f7, 0xc472f7, 0xda72f7, 0xf172f7, 0xf772e6, 0xf772d0, 0xf772b9,
+    0xf772a2, 0xf7728b, 0xf77274, 0xf78672, 0xf79d72, 0xf7b472, 0xf7cb72,
+    0xf7e272, 0xf6f772, 0xdff772, 0xc8f772, 0xb1f772, 0x9af772, 0x83f772,
 ];
 
 var rot = 0;
 var neg = 1;
 var swop = false;
+var defaultMax = 6;
+var max = 6;
 
 var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -39,18 +43,24 @@ showRe();
 
 function createLines() {
     let i = 0;
-    for (let b = 0; b <= 2; b += 0.25) {
+    if (max != 0.1) max = defaultMax;
+    for (let b = 0; b <= max; b += 0.25) {
         var line = new THREE.Geometry();
-        var line = new Float32Array(1200);
-        for (var j = 0; j < 400 * 3; j += 3) {
-            a = j / 100 - 6;
+        var line = new Float32Array(600);
+        for (var j = 0; j < 200 * 3; j += 3) {
+            a = j / 50 - 6;
             line[j] = a;
+
             if (swop) {
-                line[j + 1] = Im(b, a * neg);
-                line[j + 2] = Re(b, a * neg);
+                let im = Im(b, a * neg);
+                let re = Re(b, a * neg);
+                line[j + 1] = im;
+                line[j + 2] = re;
             } else {
-                line[j + 1] = Im(a * neg, b);
-                line[j + 2] = Re(a * neg, b);
+                let im = Im(a * neg, b);
+                let re = Re(a * neg, b);
+                line[j + 1] = im;
+                line[j + 2] = re;
             }
         }
         i++;
@@ -233,14 +243,10 @@ function render() {
     renderer.render(scene, camera);
 }
 function Re(x, y) {
-    let z = Math.sqrt(x * x + y * y);
-    let theta = Math.atan(y / x);
-    return Math.sqrt(z) * Math.cos(theta / 2);
+    return Math.log(x * x + y * y) / 2;
 }
 function Im(x, y) {
-    let z = Math.sqrt(x * x + y * y);
-    let theta = Math.atan(y / x);
-    return Math.sqrt(z) * Math.sin(theta / 2);
+    return Math.atan2(y, x);
 }
 function hina() {
     if (rot == 0.25) {
@@ -306,6 +312,13 @@ function swap() {
         if (swop) lined_var[i].innerHTML = '';
         else lined_var[i].innerText = 'i';
     }
+
+    init();
+}
+function only() {
+    if (max == 0.1) max = defaultMax;
+    else max = 0.1;
+    clear();
     init();
 }
 function clear() {

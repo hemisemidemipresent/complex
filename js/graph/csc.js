@@ -23,8 +23,8 @@ const colors = [
 var rot = 0;
 var neg = 1;
 var swop = false;
-var defaultMax = 3;
-var max = 3;
+var defaultMax = Math.PI;
+var max = Math.PI;
 
 var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -44,20 +44,27 @@ showRe();
 function createLines() {
     let i = 0;
     if (max != 0.1) max = defaultMax;
-    for (let b = 0; b <= max; b += 0.25) {
+    for (let b = 0; b <= max; b += Math.PI / 17) {
         // for each line
         var line = new THREE.Geometry();
-        var line = new Float32Array(600);
-        for (var j = 0; j < 200 * 3; j += 3) {
+        var line = new Float32Array(4800);
+        for (var j = 0; j < 400 * 12; j += 3) {
             // for each point (a+bi) or if swop: (b+ai)
-            a = j / 50 - 6;
+            a = j / 400 - 6;
             line[j] = a;
             if (swop) {
-                line[j + 1] = Im(b, a * neg) / 20;
-                line[j + 2] = Re(b, a * neg) / 20;
+                let im = Im(b, a * neg);
+                let re = Re(b, a * neg);
+                if (Math.abs(im) < 30 && Math.abs(re) < 100) {
+                    line[j + 1] = im;
+                    line[j + 2] = re;
+                }
             } else {
-                line[j + 1] = Im(a * neg, b);
-                line[j + 2] = Re(a * neg, b);
+                let re = Re(a * neg, b);
+                if (Math.abs(re) < 30 && Math.abs(re) < 100) {
+                    line[j + 1] = Im(a * neg, b);
+                    line[j + 2] = re;
+                }
             }
         }
         i++;
@@ -240,10 +247,14 @@ function render() {
     renderer.render(scene, camera);
 }
 function Re(x, y) {
-    return Math.sin(x) * Math.cosh(y);
+    let re = Math.sin(x) * Math.cosh(y);
+    let im = Math.cos(x) * Math.sinh(y);
+    return re / (re * re + im * im);
 }
 function Im(x, y) {
-    return Math.cos(x) * Math.sinh(y);
+    let re = Math.sin(x) * Math.cosh(y);
+    let im = Math.cos(x) * Math.sinh(y);
+    return -im / (re * re + im * im);
 }
 function hina() {
     if (rot == 0.25) {
@@ -309,8 +320,8 @@ function swap() {
         if (swop) lined_var[i].innerHTML = '';
         else lined_var[i].innerText = 'i';
     }
-    if (swop) defaultMax = 6;
-    else defaultMax = 3;
+    if (swop) defaultMax = Math.PI * 2;
+    else defaultMax = Math.PI;
     init();
 }
 function only() {

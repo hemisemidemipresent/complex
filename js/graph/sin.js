@@ -13,18 +13,18 @@ let frustumSize = 69;
 
 const axes = [0x50514f, 0x70c1b3, 0xed6a5a];
 const colors = [
-    0x72f777, 0x72f78e, 0x72f7a5, 0x72f7bc, 0x72f7d3, 0x72f7ea, 0x72eef7,
-    0x72d7f7, 0x72c0f7, 0x71a9f7, 0x7293f7, 0x727cf7, 0x7f72f7, 0x9672f7,
-    0xad72f7, 0xc472f7, 0xda72f7, 0xf172f7, 0xf772e6, 0xf772d0, 0xf772b9,
-    0xf772a2, 0xf7728b, 0xf77274, 0xf78672, 0xf79d72, 0xf7b472, 0xf7cb72,
-    0xf7e272, 0xf6f772, 0xdff772, 0xc8f772, 0xb1f772, 0x9af772, 0x83f772,
+    0xf77272, 0xf7a472, 0xf7d672, 0xe6f772, 0xb5f772, 0x83f772, 0x72f793,
+    0x72f7c5, 0x72f7f7, 0x72c5f7, 0x7293f7, 0x8372f7, 0xb572f7, 0xe672f7,
+    0xf772d6, 0xf772a4, 0xf77272, 0xf7a472, 0xf7d672, 0xe6f772, 0xb5f772,
+    0x83f772, 0x72f793, 0x72f7c5, 0x72f7f7, 0x72c5f7, 0x7293f7, 0x8372f7,
+    0xb572f7, 0xe672f7, 0xf772d6, 0xf772a4, 0xf77272,
 ];
 
 var rot = 0;
 var neg = 1;
 var swop = false;
-var defaultMax = 3;
-var max = 3;
+var defaultMax = Math.PI;
+var max = Math.PI;
 
 var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -44,7 +44,8 @@ showRe();
 function createLines() {
     let i = 0;
     if (max != 0.1) max = defaultMax;
-    for (let b = 0; b <= max; b += 0.25) {
+    for (let b = 0; b <= max; b += Math.PI / 16) {
+        console.log(b);
         // for each line
         var line = new THREE.Geometry();
         var line = new Float32Array(600);
@@ -60,9 +61,10 @@ function createLines() {
                 line[j + 2] = Re(a * neg, b);
             }
         }
-        i++;
+
         makeLine(line, 0);
         makeLine(line, colors[i]); // a+bi, where a is the x axis and b = 2
+        i++;
     }
 }
 
@@ -240,10 +242,10 @@ function render() {
     renderer.render(scene, camera);
 }
 function Re(x, y) {
-    return Math.cos(x) * Math.cosh(y);
+    return Math.sin(x) * Math.cosh(y);
 }
 function Im(x, y) {
-    return -Math.sin(x) * Math.sinh(y);
+    return Math.cos(x) * Math.sinh(y);
 }
 function hina() {
     if (rot == 0.25) {
@@ -309,8 +311,8 @@ function swap() {
         if (swop) lined_var[i].innerHTML = '';
         else lined_var[i].innerText = 'i';
     }
-    if (swop) defaultMax = 6;
-    else defaultMax = 3;
+    if (swop) defaultMax = Math.PI * 2;
+    else defaultMax = Math.PI;
     init();
 }
 function only() {

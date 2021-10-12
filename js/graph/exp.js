@@ -13,18 +13,18 @@ let frustumSize = 69;
 
 const axes = [0x50514f, 0x70c1b3, 0xed6a5a];
 const colors = [
-    0x72f777, 0x72f78e, 0x72f7a5, 0x72f7bc, 0x72f7d3, 0x72f7ea, 0x72eef7,
-    0x72d7f7, 0x72c0f7, 0x71a9f7, 0x7293f7, 0x727cf7, 0x7f72f7, 0x9672f7,
-    0xad72f7, 0xc472f7, 0xda72f7, 0xf172f7, 0xf772e6, 0xf772d0, 0xf772b9,
-    0xf772a2, 0xf7728b, 0xf77274, 0xf78672, 0xf79d72, 0xf7b472, 0xf7cb72,
-    0xf7e272, 0xf6f772, 0xdff772, 0xc8f772, 0xb1f772, 0x9af772, 0x83f772,
+    0xf77272, 0xf7a472, 0xf7d672, 0xe6f772, 0xb5f772, 0x83f772, 0x72f793,
+    0x72f7c5, 0x72f7f7, 0x72c5f7, 0x7293f7, 0x8372f7, 0xb572f7, 0xe672f7,
+    0xf772d6, 0xf772a4, 0xf77272, 0xf7a472, 0xf7d672, 0xe6f772, 0xb5f772,
+    0x83f772, 0x72f793, 0x72f7c5, 0x72f7f7, 0x72c5f7, 0x7293f7, 0x8372f7,
+    0xb572f7, 0xe672f7, 0xf772d6, 0xf772a4, 0xf77272,
 ];
 
 var rot = 0;
 var neg = 1;
 var swop = false;
-var defaultMax = 3;
-var max = 3;
+var defaultMax = Math.PI * 2;
+var max = Math.PI * 2;
 
 var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -44,32 +44,24 @@ showRe();
 function createLines() {
     let i = 0;
     if (max != 0.1) max = defaultMax;
-    for (let b = 0; b <= max; b += Math.PI / 24) {
-        // for each line
+    for (let b = 0; b <= max; b += Math.PI / 16) {
         var line = new THREE.Geometry();
-        var line = new Float32Array(4800);
-        for (var j = 0; j < 400 * 12; j += 3) {
-            // for each point (a+bi) or if swop: (b+ai)
-            a = j / 400 - 6;
+        var line = new Float32Array(600);
+        for (var j = 0; j < 200 * 3; j += 3) {
+            a = j / 50 - 6;
             line[j] = a;
             if (swop) {
-                let im = Im(b, a * neg);
-                let re = Re(b, a * neg);
-                if (Math.abs(im) < 30 && Math.abs(re) < 100) {
-                    line[j + 1] = im;
-                    line[j + 2] = re;
-                }
+                line[j + 1] = Im(b, a * neg);
+                line[j + 2] = Re(b, a * neg);
             } else {
-                let re = Re(a * neg, b);
-                if (Math.abs(re) < 30) {
-                    line[j + 1] = Im(a * neg, b);
-                    line[j + 2] = re;
-                }
+                line[j + 1] = Im(a * neg, b) / 25;
+                line[j + 2] = Re(a * neg, b) / 25;
             }
         }
-        i++;
+
         makeLine(line, 0);
         makeLine(line, colors[i]); // a+bi, where a is the x axis and b = 2
+        i++;
     }
 }
 
@@ -247,18 +239,10 @@ function render() {
     renderer.render(scene, camera);
 }
 function Re(x, y) {
-    let a = Math.tan(x);
-    let b = Math.tanh(y);
-    let c = 1;
-    let d = -a * b;
-    return (a * c + b * d) / (c * c + d * d);
+    return Math.pow(Math.E, x) * Math.cos(y);
 }
 function Im(x, y) {
-    let a = Math.tan(x);
-    let b = Math.tanh(y);
-    let c = 1;
-    let d = -a * b;
-    return (b * c - a * d) / (c * c + d * d);
+    return Math.pow(Math.E, x) * Math.sin(y);
 }
 function hina() {
     if (rot == 0.25) {
@@ -324,8 +308,8 @@ function swap() {
         if (swop) lined_var[i].innerHTML = '';
         else lined_var[i].innerText = 'i';
     }
-    if (swop) defaultMax = 3;
-    else defaultMax = 3;
+    if (swop) defaultMax = Math.PI;
+    else defaultMax = Math.PI * 2;
     init();
 }
 function only() {
