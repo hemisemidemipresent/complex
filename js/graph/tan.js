@@ -44,7 +44,7 @@ showRe();
 function createLines() {
     let i = 0;
     if (max != 0.1) max = defaultMax;
-    for (let b = 0; b <= max; b += Math.PI / 17) {
+    for (let b = 0; b <= max; b += Math.PI / 16) {
         // for each line
         var line = new THREE.Geometry();
         var line = new Float32Array(4800);
