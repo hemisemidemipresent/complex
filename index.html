@@ -4,32 +4,17 @@
 <head>
         <meta charset="utf-8">
         <title>z->z^2</title>
-        <meta property="og:description" content="z->z^2">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <link rel="stylesheet" href="css/main.css">
-
 </head>
 
 <body>
         <div id="container"></div>
         <div id="title">
                 <h1>z->z^2</h1>
-                <p> z = x<span class="axes_var"></span><span class="sign">+</span><span class="b1">0.00</span><span
-                                class="lined_var">i</span></p>
-                <p> z = x<span class="axes_var"></span><span class="sign">+</span><span class="b2">0.25</span><span
-                                class="lined_var">i</span></p>
-                <p> z = x<span class="axes_var"></span><span class="sign">+</span><span class="b3">0.50</span><span
-                                class="lined_var">i</span></p>
-                <p> z = x<span class="axes_var"></span><span class="sign">+</span><span class="b4">0.75</span><span
-                                class="lined_var">i</span></p>
-                <p> z = x<span class="axes_var"></span><span class="sign">+</span><span class="b5">1.00</span><span
-                                class="lined_var">i</span></p>
-                <p> z = x<span class="axes_var"></span><span class="sign">+</span><span class="b6">1.25</span><span
-                                class="lined_var">i</span></p>
-                <p> z = x<span class="axes_var"></span><span class="sign">+</span><span class="b7">1.50</span><span
-                                class="lined_var">i</span></p>
-                <p> z = ...</p>
                 <p>Im and Re axes have been scaled down by 2</p>
+                <canvas id="canvas" height="200" width="200"></canvas>
+                <br>
                 <a href="index.html">z^2</a>
                 <a href="z^3.html">z^3</a>
                 <a href="expz.html">e^z</a>
@@ -38,24 +23,19 @@
                 <a href="tanz.html">tanz</a>
                 <a href="sqrtz.html">sqrt(z)</a>
                 <a href="z^-1.html">1/z</a>
-
-
                 <br>
-                <button onclick="hina()">spin</button>
-                <button onclick="showRe()">Re</button>
-                <button onclick="showIm()">Im</button>
-                <button onclick="ReIm()">Re-Im?</button>
-                <button onclick="nega()">-ve</button>
-                <button onclick="swap()">swap 1 and i</button>
-
+                <button onclick="graph.hina()">spin</button>
+                <button onclick="graph.showRe()">Re</button>
+                <button onclick="graph.showIm()">Im</button>
+                <button onclick="graph.ReIm()">Re-Im?</button>
+                <button onclick="graph.nega()">-ve</button>
+                <button onclick="graph.swap()">swap 1 and i</button>
         </div>
-
-
 </body>
-<script src="js/three.js"></script>
-<script src="js/OrbitControls.js"></script>
-<script src="js/THREE.MeshLine.js"></script>
-
+<script src="js/three/three.js"></script>
+<script src="js/three/OrbitControls.js"></script>
+<script src="js/three/THREE.MeshLine.js"></script>
+<script src="js/graph/graph.js"></script>
 <script src="js/graph/x2.js"></script>
 
 </html>

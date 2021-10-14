@@ -25,7 +25,14 @@ body {
 	height: 100%;
 	border: 1px solid transparent;
 }
-
+#canvas{
+	background: rgba(128,128,128,0.69);
+}
+#input{
+	width:400px;
+	display: flex;
+	flex-direction: row;
+}
 h1 {
 	font-weight: 300;
 	font-size: 24px;
