@@ -54,9 +54,9 @@ function createLines() {
                 line[j + 2] = Re(a * neg, b);
             }
         }
-        i++;
         makeLine(line, 0);
         makeLine(line, colors[i]); // a+bi, where a is the x axis and b = 2
+        i++;
     }
 }
 
